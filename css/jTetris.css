@@ -1,0 +1,29 @@
+/**
+ * 	jTetris
+ *  Author : Elfhir - Jérémy Ta
+ *  Licence : MIT
+ */
+
+.jTetris-title {
+	color: #ccc;
+}
+
+.jTetris-footer {
+	position: relative;
+	bottom: 0;
+	background: #222222;
+	color: #eee;
+}
+
+.jTetris-wrapper {
+	min-width: 70%;
+	max-width: 80%;
+	min-height: 70%;
+	max-height: 80%;
+	background: #444;
+}
+
+.jTetris-key-info {
+	margin: 25% 5%;
+	color: #111;
+}
