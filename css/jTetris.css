@@ -4,7 +4,24 @@
  *  Licence : MIT
  */
 
+@font-face {
+    font-family: 'silkscreennormal';
+    src: url('../fonts/silkscreen/slkscr-webfont.eot');
+    src: url('../fonts/silkscreen/slkscr-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/silkscreen/slkscr-webfont.woff') format('woff'),
+         url('../fonts/silkscreen/slkscr-webfont.ttf') format('truetype'),
+         url('../fonts/silkscreen/slkscr-webfont.svg#silkscreennormal') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.container {
+	font-family: Calibri, Verdana, Arial, sans-serif;
+	height: 100%;
+}
+
 .jTetris-title {
+	font-family: 'silkscreennormal';
 	color: #ccc;
 }
 
@@ -20,6 +37,8 @@
 	max-width: 80%;
 	min-height: 70%;
 	max-height: 80%;
+	width: 70%;
+	height: 80%;
 	background: #444;
 }
 
