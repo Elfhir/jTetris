@@ -27,31 +27,44 @@ jQuery.noConflict();
 
 		base.keyboard = function(){
 			$(document).keypress(function(event) {
-				event.preventDefault();
+				
 				var keyCode = event.keyCode || event.which,
 				keys = {left: 37, up: 38, right: 39, down: 40, space: 32 };
 
 				switch (keyCode) {
 					case keys.left:
-					  $('.jTetris-key-info').text("<");
+						event.preventDefault();
+						$('.jTetris-key-info').text("<");
 					break;
 					case keys.up:
-					  $('.jTetris-key-info').text("^");
+						event.preventDefault();
+						$('.jTetris-key-info').text("^");
 					break;
 					case keys.right:
-					  $('.jTetris-key-info').text(">");
+						event.preventDefault();
+						$('.jTetris-key-info').text(">");
 					break;
 					case keys.down:
-					  $('.jTetris-key-info').text("v");
+						event.preventDefault();
+						$('.jTetris-key-info').text("v");
 					break;
 					case keys.space:
-					  $('.jTetris-key-info').text("space");
-					break;
-					default:
+						event.preventDefault();
+						$('.jTetris-key-info').text("space");
 					break;
 				}
 
 			});
+		};
+
+		// set design, size
+		base.setup = function(){
+			var canvas = document.getElementById(base);
+    		var context = canvas.getContext('2d');
+		};
+
+		base.createTetrominoes = function(){
+
 		};
 		
 		// Sample Function, Uncomment to use
