@@ -4,91 +4,110 @@
  *  Licence : MIT
  */
 
-jQuery.noConflict();
-(function($){
-	$.jTetris = function(el, options){
-		// To avoid scope issues, use 'base' instead of 'this'
-		// to reference this class from internal events and functions.
-		var base = this;
-		
-		// Access to jQuery and DOM versions of element
-		base.$el = $(el);
-		base.el = el;
-		
-		// Add a reverse reference to the DOM object
-		base.$el.data("jTetris", base);
-		
-		base.init = function(){
-			base.options = $.extend({},$.jTetris.defaultOptions, options);
-			
-			// Put your initialization code here
-			base.keyboard();
-		};
+"use strict";
+var jTetris = {
 
-		base.keyboard = function(){
-			$(document).keypress(function(event) {
-				
-				var keyCode = event.keyCode || event.which,
-				keys = {left: 37, up: 38, right: 39, down: 40, space: 32 };
+	// Vars
+	wrapper : null,
+	that : null,
+	infoZone : null,
+	gameZone : null,
+	keysZone : null,
 
-				switch (keyCode) {
-					case keys.left:
-						event.preventDefault();
-						$('.jTetris-key-info').text("<");
-					break;
-					case keys.up:
-						event.preventDefault();
-						$('.jTetris-key-info').text("^");
-					break;
-					case keys.right:
-						event.preventDefault();
-						$('.jTetris-key-info').text(">");
-					break;
-					case keys.down:
-						event.preventDefault();
-						$('.jTetris-key-info').text("v");
-					break;
-					case keys.space:
-						event.preventDefault();
-						$('.jTetris-key-info').text("space");
-					break;
-				}
+	keys : {
+		left: 37,
+		up: 38,
+		right: 39,
+		down: 40,
+		z: 90,
+		q: 81,
+		s: 83,
+		d: 68,
+		space: 32
+	},
 
-			});
-		};
-
-		// set design, size
-		base.setup = function(){
-			var canvas = document.getElementById(base);
-    		var context = canvas.getContext('2d');
-		};
-
-		base.createTetrominoes = function(){
-
-		};
-		
-		// Sample Function, Uncomment to use
-		// base.functionName = function(paramaters){
-		// 
-		// };
-		
-		// Run initializer
-		base.init();
-	};
+	// Methods
 	
-	$.jTetris.defaultOptions = {
-	};
+	init : function() {
+		// Put your initialization code here
+		jTetris.setup();
+		jTetris.keyboardListener();
+		
+		jTetris.setupKinetic();
+		window.console.log(jTetris.that.style.offsetHeight);
+		//jTetris.createTetrominoes();
+	},
 	
-	$.fn.jTetris = function(options){
-		return this.each(function(){
-			(new $.jTetris(this, options));
+	keyboardListener : function() {
+		document.addEventListener("keydown", function (e) {			
+			switch (e.keyCode) {
+				case jTetris.keys.left :
+				case jTetris.keys.q :
+					e.preventDefault();
+					window.console.log("left");
+				break;
+
+				case jTetris.keys.up :
+				case jTetris.keys.z :
+					e.preventDefault();
+					window.console.log("up");
+				break;
+
+				case jTetris.keys.right :
+				case jTetris.keys.d :
+					e.preventDefault();
+					window.console.log("right");
+				break;
+
+				case jTetris.keys.down :
+				case jTetris.keys.s :
+					e.preventDefault();
+					window.console.log("down");
+				break;
+
+				case jTetris.keys.space :
+					e.preventDefault();
+					window.console.log("space");
+				break;
+			}
 		});
-	};
-	
-	// This function breaks the chain, but returns
-	// the jTetris if it has been attached to the object.
-	$.fn.getjTetris = function(){
-		this.data("jTetris");
-	};
-	
-})(jQuery);
+	},
+
+	setup : function() {
+		jTetris.wrapper = document.getElementById("jTetris-wrapper");
+		jTetris.that = document.getElementById("jTetris");
+		jTetris.infoZone = document.getElementById("jTetris-info-zone");
+		jTetris.gameZone = document.getElementById("jTetris-game-zone");
+		jTetris.tetriminoesInfo = document.getElementById("jTetris-tetriminoes-info");
+	},
+
+	setupKinetic : function() {
+		var stage = new Kinetic.Stage({
+			container: jTetris.that,
+			width: 300,
+			height: 300
+		});
+
+		var gameLayer = new Kinetic.Layer();
+
+		var rect = new Kinetic.Rect({
+	        x: 239,
+	        y: 75,
+	        width: 100,
+	        height: 50,
+	        fill: 'green',
+	        stroke: 'black',
+	        strokeWidth: 4
+	      });
+
+	      // add the shape to the layer
+	      gameLayer.add(rect);
+
+	      // add the layer to the stage
+	      stage.add(gameLayer);
+
+	}
+
+};
+
+jTetris.init();

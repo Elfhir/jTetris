@@ -2,6 +2,12 @@
 <!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en" > <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 
+<!--
+	jTetris
+	Author : Elfhir - Jérémy Ta
+	Licence : MIT
+-->
+
 <head>
 	<meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
@@ -9,7 +15,7 @@
   <link rel="shortcut icon" href="./img/favicon.ico" >
   <link rel="stylesheet" href="css/jTetris.css">  
   <link rel="stylesheet" href="css/foundation.css">
-  <script src="js/vendor/custom.modernizr.js"></script>
+  <script type="text/javascript" src="vendor/custom.modernizr.js"></script>
 </head>
 <body>
 	<div id="container">
@@ -17,7 +23,7 @@
 			<ul class="title-area">
 			  <!-- Title Area -->
 				<li class="name">
-					<h1 class="jTetris-title"><a href="#">jTetris</a></h1>
+					<h1 id="jTetris-title"><a href="#">jTetris</a></h1>
 				</li>
 			  	<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
 			  	<li class="toggle-topbar menu-icon">
@@ -41,21 +47,21 @@
 		</nav>
 
 		<div class="row">
-			<div id="jTetris">
+			<div id="jTetris-wrapper">
 				<div id="jTetris-game-zone" class="small-10 columns">
-					<canvas id="jTetris-canvas" width="578" height="200"></canvas> 
+					<div id="jTetris"></div> 
 				</div>
 				<div id="jTetris-info-zone" class="small-2 columns">
-					<p class="jTetris-key-info"></p>
+					<div id="jTetris-tetriminoes-info"></div>
 				</div>
 			</div>	
 		</div>
 
 
-		<div class="jTetris-footer">
+		<div id="jTetris-footer">
 			<div class="row">
 				<div class="two columns">
-		   			<p>Version : 0.0.4</p>
+		   			<p>Version : 0.0.7</p>
 		   		</div>
 				<div class="two columns">
 		   			<p class="copyright">&copy;Elfhir - Jérémy Ta - MIT License</a></p>
@@ -63,60 +69,16 @@
 			</div>
 		</div>
 	</div>
-		
-  <!--script>
-	  document.write('<script src=' +
-	  ('__proto__' in {} ? 'js/vendor/zepto' : 'js/vendor/jquery') +
-	  '.js><\/script>')
-  </script-->
-  <script type="text/javascript" src="./js/lib/jquery-2.0.3.min.js"></script>
-  <script src="js/foundation.min.js"></script>
-  
-  <!--
-  
-  <script src="js/foundation/foundation.js"></script>
-  
-  <script src="js/foundation/foundation.interchange.js"></script>
-  
-  <script src="js/foundation/foundation.abide.js"></script>
-  
-  <script src="js/foundation/foundation.dropdown.js"></script>
-  
-  <script src="js/foundation/foundation.placeholder.js"></script>
-  
-  <script src="js/foundation/foundation.forms.js"></script>
-  
-  <script src="js/foundation/foundation.alerts.js"></script>
-  
-  <script src="js/foundation/foundation.magellan.js"></script>
-  
-  <script src="js/foundation/foundation.reveal.js"></script>
-  
-  <script src="js/foundation/foundation.tooltips.js"></script>
-  
-  <script src="js/foundation/foundation.clearing.js"></script>
-  
-  <script src="js/foundation/foundation.cookie.js"></script>
-  
-  <script src="js/foundation/foundation.joyride.js"></script>
-  
-  <script src="js/foundation/foundation.orbit.js"></script>
-  
-  <script src="js/foundation/foundation.section.js"></script>
-  
-  <script src="js/foundation/foundation.topbar.js"></script>
-
- 
-  -->
-  
-  <script>
-	$(document).foundation();
-  </script>
-  <script src="js/jTetris.js"></script>
-  <script>
-  	jQuery(document).ready(function($) {
-  		jQuery('#jTetris').jTetris();
-  	});
-  </script>
+	<script>
+		document.write('<script src=' +
+		('__proto__' in {} ? 'vendor/zepto' : 'vendor/jquery') +
+		'.js><\/script>')
+	</script>
+	<script type="text/javascript" src="js/foundation.min.js"></script>  
+	<script>
+		$(document).foundation();
+	</script>
+	<script type="text/javascript" src="vendor/kinetic-v4.6.0.min.js"></script>
+	<script type="text/javascript" src="js/jTetris.js"></script>
 </body>
 </html>
