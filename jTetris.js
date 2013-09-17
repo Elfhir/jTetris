@@ -28,11 +28,6 @@ var jTetris = {
 		space	:	32
 	},
 
-	speed					:	5,
-
-	current_x				:	0,
-	current_y				:	0,
-
 	stage_width				:	200,
 	stage_height			:	360,
 	score_height			:	200,
@@ -111,50 +106,54 @@ var jTetris = {
 		jTetris.preview = document.getElementById("jTetris-tetriminoes-info");
 	},
 
-
-
 	// Game Zone #jTetris
 	gamePlayground : function () {
-		/*
+
 		var gameStage = new Kinetic.Stage({
-			container:	jTetris.that,
-			width:		jTetris.stage_width,
-			height:		jTetris.stage_height
-		});
-		*/
-	
-		var gameLayer = new Kinetic.Layer({
-			width:		(4*jTetris.square_size),
-			height:		(4*jTetris.square_size)
+			container: 	jTetris.that,
+			width: 		jTetris.stage_width,
+			height: 	jTetris.stage_height
 		});
 
-		var line = new LineTetris();
-	
-		for(var i = 0; i < 4; ++i) {
-			gameLayer.add(line.squares[i]);
+		var gameLayer = new Kinetic.Layer();
+
+		var squares = new Array();
+		var squares2 = new Array();
+
+		for(var i = 0; i < 10; ++i) {
+			squares[i] = new Kinetic.Rect({
+				x: 0 + (i*jTetris.square_size),
+				y: 0,
+				width:			jTetris.square_size,
+				height:			jTetris.square_size,
+				fill:			jTetris.colors.violet,
+				stroke:			jTetris.colors.blackGrey,
+				strokeWidth:	jTetris.stroke_size
+			});
+
+			gameLayer.add(squares[i]);
 		}
-		return gameLayer;
-		//gameStage.add(gameLayer);
-		//return gameStage;
+
+		for(var i = 0; i < 10; ++i) {
+			squares2[i] = new Kinetic.Rect({
+				x: 0,
+				y: 0 + (i*jTetris.square_size),
+				width:			jTetris.square_size,
+				height:			jTetris.square_size,
+				fill:			jTetris.colors.violet,
+				stroke:			jTetris.colors.blackGrey,
+				strokeWidth:	jTetris.stroke_size
+			});
+
+			gameLayer.add(squares2[i]);
+		}
+
+		gameStage.add(gameLayer);
 	},
 
 	setupKinetic : function() {
 
-		var gameLayer = jTetris.gamePlayground();
-		console.log(gameLayer);
-		var anim = new Kinetic.Animation(
-			function() {
-				gameLayer.move(0, jTetris.speed);
-		}, gameLayer);
-
-		anim.start();
-
-		var gameStage = new Kinetic.Stage({
-			container:	jTetris.that,
-			width:		jTetris.stage_width,
-			height:		jTetris.stage_height
-		});
-		gameStage.add(gameLayer);
+		var gamePlayground = jTetris.gamePlayground();
 
 		// tetriminoes preview Zone #jTetris-info-zone
 		var previewStage = new Kinetic.Stage({
@@ -179,7 +178,7 @@ var jTetris = {
 			y: 15,
 			text:"0000",
 			fontSize: 12,
-			fontFamily: "Calibri",
+			fontFamily: 'Calibri',
 			fill: jTetris.colors.cyan
 		});
 
@@ -187,21 +186,6 @@ var jTetris = {
 		scoreStage.add(scoreLayer);
 	}
 };
-
-function LineTetris() {
-	this.squares = new Array(4);
-	for(var i = 0; i < 4; ++i) {
-		this.squares[i] = new Kinetic.Rect({
-			x: 0 + (i*jTetris.square_size),
-			y: 0,
-			width:			jTetris.square_size,
-			height:			jTetris.square_size,
-			fill:			jTetris.colors.violet,
-			stroke:			jTetris.colors.blackGrey,
-			strokeWidth:	jTetris.stroke_size
-		});
-	}
-}
 
 jTetris.init();
 
