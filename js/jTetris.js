@@ -28,7 +28,8 @@ var jTetris = {
 		space	:	32
 	},
 
-	speed					:	5,
+	speed					:	0.1,
+	frequence				:	2000,
 
 	current_x				:	0,
 	current_y				:	0,
@@ -115,14 +116,6 @@ var jTetris = {
 
 	// Game Zone #jTetris
 	gamePlayground : function () {
-		/*
-		var gameStage = new Kinetic.Stage({
-			container:	jTetris.that,
-			width:		jTetris.stage_width,
-			height:		jTetris.stage_height
-		});
-		*/
-	
 		var gameLayer = new Kinetic.Layer({
 			width:		(4*jTetris.square_size),
 			height:		(4*jTetris.square_size)
@@ -134,20 +127,25 @@ var jTetris = {
 			gameLayer.add(line.squares[i]);
 		}
 		return gameLayer;
-		//gameStage.add(gameLayer);
-		//return gameStage;
 	},
 
 	setupKinetic : function() {
 
 		var gameLayer = jTetris.gamePlayground();
-		console.log(gameLayer);
-		var anim = new Kinetic.Animation(
+		
+		var count = 0;
+		var down = new Kinetic.Animation(
 			function() {
-				gameLayer.move(0, jTetris.speed);
-		}, gameLayer);
+				gameLayer.setPosition(0, count*jTetris.square_size);
+				
+			}, gameLayer);
 
-		anim.start();
+		var downId = setInterval(function() {
+			down.stop();
+			count++;
+			down.start();
+		}, jTetris.frequence);
+		
 
 		var gameStage = new Kinetic.Stage({
 			container:	jTetris.that,
@@ -204,17 +202,3 @@ function LineTetris() {
 }
 
 jTetris.init();
-
-/*
-		var rect = new Kinetic.Rect({
-			x: 0,
-			y: 0,
-			width:			jTetris.square_size,
-			height:			jTetris.square_size,
-			fill:			jTetris.colors.violet,
-			stroke:			jTetris.colors.blackGrey,
-			strokeWidth:	jTetris.stroke_size
-		});
-
-		gameLayer.add(rect);
- */
