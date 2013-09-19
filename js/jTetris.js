@@ -30,9 +30,11 @@ var jTetris = {
 
 	speed					:	0.1,
 	frequence				:	2000,
+	down					:	null,
 
 	current_x				:	0,
 	current_y				:	0,
+	current_theta			:	0,
 
 	stage_width				:	200,
 	stage_height			:	360,
@@ -116,18 +118,39 @@ var jTetris = {
 
 	rotate : function(alpha) {
 		
-		var current_theta = jTetris.currentLayer.getRotationDeg();
+		console.log("before : " + jTetris.current_theta);
+		//if(jTetris.current_theta == 360) {jTetris.current_theta = 0 ;}
+		//console.log("after : " + jTetris.current_theta);
 		
-		console.log(current_theta);
 
-		var rotation = new Kinetic.Animation(
-			function() {
-				current_theta == (-90) ? alpha = -90 : alpha = 90;
-				jTetris.currentLayer.setRotationDeg(current_theta - alpha);
-				
-			}, jTetris.currentLayer);
+			if (jTetris.current_theta == 0) {
+				//console.log("theta : 0");
+				jTetris.current_theta = 90;
+				jTetris.currentLayer.setRotationDeg(alpha);
+				jTetris.currentLayer.setPosition(jTetris.current_x + jTetris.square_size, jTetris.current_y + jTetris.square_size);
+			}
 
-		rotation.start();
+			else if (jTetris.current_theta == 90) {
+				//console.log("theta : 90");
+				jTetris.current_theta = 180;
+				jTetris.currentLayer.setRotationDeg(alpha*2);
+				jTetris.currentLayer.setPosition(jTetris.current_x + 3*jTetris.square_size, jTetris.current_y + jTetris.square_size);
+			}
+
+			else if (jTetris.current_theta == 180) {
+				//console.log("theta : 180");
+				jTetris.current_theta = 270;
+				jTetris.currentLayer.setRotationDeg(alpha*3);
+				jTetris.currentLayer.setPosition(jTetris.current_x - jTetris.square_size, jTetris.current_y + jTetris.square_size);
+			}
+
+			else if (jTetris.current_theta == 270) {
+				//console.log("theta : 270");
+				jTetris.current_theta = 0;
+				jTetris.currentLayer.setRotationDeg(0);
+				jTetris.currentLayer.setPosition(jTetris.current_x - 3*jTetris.square_size, jTetris.current_y - jTetris.square_size);
+			}
+		
 	},
 
 	// Game Zone #jTetris
@@ -150,17 +173,20 @@ var jTetris = {
 		jTetris.currentLayer = jTetris.gamePlayground();
 		
 		var count = 0;
-		var down = new Kinetic.Animation(
+		jTetris.down = new Kinetic.Animation(
 			function() {
-				jTetris.currentLayer.setPosition(0, count*jTetris.square_size);
+				jTetris.current_y = jTetris.currentLayer.getY();
+				jTetris.current_x = jTetris.currentLayer.getX();
+				//jTetris.currentLayer.setRotationDeg(jTetris.current_theta);
 				
+				jTetris.currentLayer.setPosition(jTetris.current_x, count*jTetris.square_size);
 			}, jTetris.currentLayer);
 
 		var runTime = setCustomTimer( function(){
 			// Call here any routine function
-			down.stop();
+			jTetris.down.stop();
 			count++;
-			down.start();
+			jTetris.down.start();
 
 		}, jTetris.frequence, 0 );
 
