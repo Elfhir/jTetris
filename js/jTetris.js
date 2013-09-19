@@ -32,7 +32,7 @@ var jTetris = {
 	frequence				:	2000,
 	down					:	null,
 
-	current_x				:	0,
+	current_x				:	60,
 	current_y				:	0,
 	current_theta			:	0,
 
@@ -127,28 +127,28 @@ var jTetris = {
 				//console.log("theta : 0");
 				jTetris.current_theta = 90;
 				jTetris.currentLayer.setRotationDeg(alpha);
-				jTetris.currentLayer.setPosition(jTetris.current_x + jTetris.square_size, jTetris.current_y + jTetris.square_size);
+				jTetris.currentLayer.setPosition(jTetris.current_x + 2*jTetris.square_size, jTetris.current_y + jTetris.square_size);
 			}
 
 			else if (jTetris.current_theta == 90) {
 				//console.log("theta : 90");
 				jTetris.current_theta = 180;
 				jTetris.currentLayer.setRotationDeg(alpha*2);
-				jTetris.currentLayer.setPosition(jTetris.current_x + 3*jTetris.square_size, jTetris.current_y + jTetris.square_size);
+				jTetris.currentLayer.setPosition(jTetris.current_x + 2*jTetris.square_size, jTetris.current_y + jTetris.square_size);
 			}
 
 			else if (jTetris.current_theta == 180) {
 				//console.log("theta : 180");
 				jTetris.current_theta = 270;
 				jTetris.currentLayer.setRotationDeg(alpha*3);
-				jTetris.currentLayer.setPosition(jTetris.current_x - jTetris.square_size, jTetris.current_y + jTetris.square_size);
+				jTetris.currentLayer.setPosition(jTetris.current_x - 2*jTetris.square_size, jTetris.current_y + jTetris.square_size);
 			}
 
 			else if (jTetris.current_theta == 270) {
 				//console.log("theta : 270");
 				jTetris.current_theta = 0;
 				jTetris.currentLayer.setRotationDeg(0);
-				jTetris.currentLayer.setPosition(jTetris.current_x - 3*jTetris.square_size, jTetris.current_y - jTetris.square_size);
+				jTetris.currentLayer.setPosition(jTetris.current_x - 2*jTetris.square_size, jTetris.current_y - jTetris.square_size);
 			}
 		
 	},
@@ -156,6 +156,8 @@ var jTetris = {
 	// Game Zone #jTetris
 	gamePlayground : function () {
 		var gameLayer = new Kinetic.Layer({
+			x: jTetris.current_x,
+			y: jTetris.current_y,
 			width:		(4*jTetris.square_size),
 			height:		(4*jTetris.square_size)
 		});
