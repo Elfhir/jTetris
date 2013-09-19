@@ -57,14 +57,15 @@ var jTetris = {
 		violet:		"#6000ff"
 	},
 
+	currentLayer: null,
+
 	// Methods
 	
 	init : function() {
 		// Put your initialization code here
 		jTetris.setup();
-		jTetris.keyboardListener();
-		
 		jTetris.setupKinetic();
+		jTetris.keyboardListener();
 		//jTetris.createTetrominoes();
 	},
 	
@@ -98,6 +99,7 @@ var jTetris = {
 				case jTetris.keys.space :
 					e.preventDefault();
 					window.console.log("space");
+					jTetris.rotate(90);
 				break;
 			}
 		});
@@ -112,7 +114,21 @@ var jTetris = {
 		jTetris.preview = document.getElementById("jTetris-tetriminoes-info");
 	},
 
+	rotate : function(alpha) {
+		
+		var current_theta = jTetris.currentLayer.getRotationDeg();
+		
+		console.log(current_theta);
 
+		var rotation = new Kinetic.Animation(
+			function() {
+				current_theta == (-90) ? alpha = -90 : alpha = 90;
+				jTetris.currentLayer.setRotationDeg(current_theta - alpha);
+				
+			}, jTetris.currentLayer);
+
+		rotation.start();
+	},
 
 	// Game Zone #jTetris
 	gamePlayground : function () {
@@ -131,28 +147,30 @@ var jTetris = {
 
 	setupKinetic : function() {
 
-		var gameLayer = jTetris.gamePlayground();
+		jTetris.currentLayer = jTetris.gamePlayground();
 		
 		var count = 0;
 		var down = new Kinetic.Animation(
 			function() {
-				gameLayer.setPosition(0, count*jTetris.square_size);
+				jTetris.currentLayer.setPosition(0, count*jTetris.square_size);
 				
-			}, gameLayer);
+			}, jTetris.currentLayer);
 
-		var downId = setInterval(function() {
+		var runTime = setCustomTimer( function(){
+			// Call here any routine function
 			down.stop();
 			count++;
 			down.start();
-		}, jTetris.frequence);
-		
+
+		}, jTetris.frequence, 0 );
+
 
 		var gameStage = new Kinetic.Stage({
 			container:	jTetris.that,
 			width:		jTetris.stage_width,
 			height:		jTetris.stage_height
 		});
-		gameStage.add(gameLayer);
+		gameStage.add(jTetris.currentLayer);
 
 		// tetriminoes preview Zone #jTetris-info-zone
 		var previewStage = new Kinetic.Stage({
@@ -200,5 +218,28 @@ function LineTetris() {
 		});
 	}
 }
+
+// Globa utils function
+
+/**
+	* Custom "setInterval" with internal function modifying the interval
+	*
+	* @param callback The function to call various times
+	* intervals A duration using seconds
+	* index
+	*
+	*/
+	function setCustomTimer(callback, intervals, index) {
+		var internalCallback = function() {
+			return function() {
+				// Call our internal callback routine with different interval of time
+				window.setTimeout(internalCallback, intervals);
+				// We don't care of the internal routine, that's the callback we really want :)
+				callback();
+			}
+		}(intervals, 0);
+
+		window.setTimeout(internalCallback, intervals);
+	};
 
 jTetris.init();
